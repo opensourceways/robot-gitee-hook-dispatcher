@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/opensourceways/community-robot-lib/config"
+	"github.com/opensourceways/community-robot-lib/mq"
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
@@ -25,7 +25,7 @@ type accessConfig struct {
 	// Plugins is a list available plugins.
 	Plugins []pluginConfig `json:"plugins,omitempty"`
 
-	Broker config.MQConfig `json:"broker,omitempty"`
+	Broker mq.MQConfig `json:"broker,omitempty"`
 }
 
 func (a accessConfig) validate() error {

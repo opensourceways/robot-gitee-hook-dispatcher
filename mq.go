@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/opensourceways/community-robot-lib/config"
+	"github.com/opensourceways/community-robot-lib/kafka"
 	"github.com/opensourceways/community-robot-lib/mq"
 	"github.com/sirupsen/logrus"
 )
@@ -21,9 +22,9 @@ func initMQ(agent config.ConfigAgent) error {
 		return err
 	}
 
-	err = mq.Init(
+	err = kafka.Init(
 		mq.Addresses(cfg.Config.Broker.Addresses...),
-		mq.TLSConfig(tlsConfig),
+		mq.SetTLSConfig(tlsConfig),
 		mq.Log(logrus.WithField("module", "broker")),
 		mq.ErrorHandler(errorHandler()),
 	)
@@ -32,7 +33,7 @@ func initMQ(agent config.ConfigAgent) error {
 		return err
 	}
 
-	return mq.Connect()
+	return kafka.Connect()
 }
 
 func handleGiteeMessage(d *dispatcher) mq.Handler {
